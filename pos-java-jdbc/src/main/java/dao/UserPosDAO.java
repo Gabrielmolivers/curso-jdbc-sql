@@ -1,5 +1,6 @@
 package dao;
 
+import java.beans.beancontext.BeanContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import conexaojdbc.SingleConnection;
+import model.BeanUserFone;
 import model.Telefone;
 import model.Userposjava;
 
@@ -38,11 +40,11 @@ public class UserPosDAO {
 		}
 
 	}
-	
+
 	public void salvarTelefone(Telefone telefone) {
-		
+
 		try {
-			
+
 			String sql = "INSERT INTO public.telefoneuser(numero, tipo, usuariopessoa) VALUES (?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, telefone.getNumero());
@@ -50,7 +52,7 @@ public class UserPosDAO {
 			statement.setLong(3, telefone.getUsuario());
 			statement.execute();
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			try {
 				connection.rollback();
@@ -58,7 +60,7 @@ public class UserPosDAO {
 				e1.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	public List<Userposjava> listar() throws Exception {
@@ -78,8 +80,8 @@ public class UserPosDAO {
 
 		return list;
 	}
-	
-	public Userposjava buscar (Long id) throws Exception {
+
+	public Userposjava buscar(Long id) throws Exception {
 		Userposjava retorno = new Userposjava();
 		String sql = "select * from userposjava where id = " + id;
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -93,6 +95,33 @@ public class UserPosDAO {
 		}
 
 		return retorno;
+	}
+
+	public List<BeanUserFone> listaUserFone(Long idUser) {
+		List<BeanUserFone> beanUserFone = new ArrayList<BeanUserFone>();
+
+		String sql = " select nome, numero, email from telefoneuser as fone ";
+		sql += " inner join userposjava as userpj ";
+		sql += " on fone.usuariopessoa = user.id ";
+		sql += " where userpj.id = " + idUser;
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				BeanUserFone userFone = new BeanUserFone();
+				userFone.setEmail(resultSet.getString("email"));
+				userFone.setNome(resultSet.getString("nome"));
+				userFone.setNumero(resultSet.getString("numero"));
+				beanUserFone.add(userFone);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return beanUserFone;
 	}
 
 	public void atualizar(Userposjava userposjava) {
@@ -114,15 +143,15 @@ public class UserPosDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deletar(Long id) {
 		try {
-			
+
 			String sql = "delete from userposjava where id = " + id;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			try {
 				connection.rollback();
