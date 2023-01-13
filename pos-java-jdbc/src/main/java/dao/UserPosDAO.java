@@ -98,12 +98,12 @@ public class UserPosDAO {
 	}
 
 	public List<BeanUserFone> listaUserFone(Long idUser) {
-		List<BeanUserFone> beanUserFone = new ArrayList<BeanUserFone>();
+		List<BeanUserFone> beanUserFones = new ArrayList<BeanUserFone>();
 
 		String sql = " select nome, numero, email from telefoneuser as fone ";
-		sql += " inner join userposjava as userpj ";
-		sql += " on fone.usuariopessoa = user.id ";
-		sql += " where userpj.id = " + idUser;
+		sql += " inner join userposjava as userp ";
+		sql += " on fone.usuariopessoa = userp.id ";
+		sql += " where userp.id = " + idUser;
 
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -114,14 +114,14 @@ public class UserPosDAO {
 				userFone.setEmail(resultSet.getString("email"));
 				userFone.setNome(resultSet.getString("nome"));
 				userFone.setNumero(resultSet.getString("numero"));
-				beanUserFone.add(userFone);
+				beanUserFones.add(userFone);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return beanUserFone;
+		return beanUserFones;
 	}
 
 	public void atualizar(Userposjava userposjava) {
