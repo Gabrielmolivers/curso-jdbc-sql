@@ -11,7 +11,7 @@
 <h1>Bem vindo ao Curso de JSP!</h1>
 
 
-<form action="ServletLogin">
+<form action="ServletsLogin" method="post">
 <input name="nome">
 <input name="idade">
 
