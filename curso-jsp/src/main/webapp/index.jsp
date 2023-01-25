@@ -26,11 +26,13 @@ h5{
 
 .msg{
  position: absolute;
- top: 55%;
+ top: 5%;
  left: 33%;
  right: 33%;
  font-size: 15px;
- color: #FF0000;
+ color: rgb(234 134 143);
+ background-color: rgb(44 11 14);
+ border-color: #ffecb5;
 }
 
 
@@ -44,21 +46,21 @@ h5{
 
 <form action="ServletsLogin" method="post" class="row g-3 needs-validation" novalidate>
 <input type="hidden" value=<%request.getParameter("url");%> name="url">
-<div class="col-md-6">
+<div class="mb-3">
 	<label class="form-label">Login:</label>
 	<input class="form-control" name="login" type="text" required="required">
 	<div class="invalid-feedback">
       Informe o Login
     </div>
 </div>
-<div class="col-md-6">	
+<div class="mb-3">	
 	<label class="form-label">Senha:</label>
 	<input class="form-control" name="senha" type="password" required="required">
 	<div class="invalid-feedback">
 	  Informe a Senha
 	</div>
 </div>
-<div class="col-12">
+<div class="mb-3">
 	<button type="submit" class="btn btn-primary">Entrar</button>
 </div>
 </form>
