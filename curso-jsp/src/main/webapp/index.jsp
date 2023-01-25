@@ -3,21 +3,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Curso JSP</title>
+<meta charset="UTF-8">
+<title>Curso JSP</title>
 </head>
 <body>
 
-<h1>Bem vindo ao Curso de JSP!</h1>
+	<h1>Bem vindo ao Curso de JSP!</h1>
 
 
-<form action="ServletsLogin" method="post">
-<input name="nome">
-<input name="idade">
+	<form action="ServletsLogin" method="post">
+	<input type="hidden" value=<% request.getParameter("url"); %> name="url">
 
-<input type="submit" value="Enviar">
+		<table>
+			<tr>
+				<td><label>Login:</label></td>
+				<td><input name="login" type="text"></td>
+			</tr>
 
-</form>
+			<tr>
+				<td><label>Senha:</label></td>
+				<td><input name="senha" type="password"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Entrar"></td>
+			</tr>
+
+		</table>
+
+	</form>
+	
+	<h4>${msg}</h4>
 
 </body>
 </html>
