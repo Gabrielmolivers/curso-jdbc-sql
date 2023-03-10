@@ -7,11 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<%
-String nome = request.getParameter("nome");
-out.print(nome);
-%>
+<h1>Tela Principal após Login</h1>
 
 </body>
 </html>
